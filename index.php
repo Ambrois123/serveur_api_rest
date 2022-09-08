@@ -26,7 +26,7 @@
                         if(empty($url[2])) throw new Exception ("ID manquant");
                         $apiController->getOneSalle($url[2]);
                     break;
-                    case "formulaire" : $apiController ->getFormulaire();
+                    case "perms" : $apiController ->getPerms();
                     break;
                     default : throw new Exception("La page n'existe pas");
                 }
