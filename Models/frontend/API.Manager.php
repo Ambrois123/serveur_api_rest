@@ -4,10 +4,9 @@ require_once "Models/Model.php";
 
 class APIManager extends Model{
 
-    public function getDBClients(){
+    public function getClients(){
         $req = "SELECT * 
         from Api_client
-        INNER JOIN Api_salleclient ON Api_salleclient.client_id = Api_client.client_id
         ";
         $statement = $this->getBdd()->prepare($req);
         $statement->execute();
@@ -19,13 +18,12 @@ class APIManager extends Model{
     public function getDBOneClient($idClient){
         $req = "SELECT * 
         from Api_client
-        INNER JOIN Api_salleclient ON Api_salleclient.client_id = Api_client.client_id
         WHERE Api_client.client_id = :idClient
         ";
         $statement = $this->getBdd()->prepare($req);
         $statement->bindValue(":idClient", $idClient,PDO::PARAM_INT);
         $statement->execute();
-        $oneClient = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $oneClient = $statement->fetch(PDO::FETCH_ASSOC);
         $statement->closeCursor();
         return $oneClient;
     }

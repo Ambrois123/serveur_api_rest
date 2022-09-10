@@ -16,27 +16,41 @@ class APIController{
     }
     public function getOneClient($idClient){
         $oneClient = $this->apiManager->getDBOneClient($idClient);
-        Model::sendJSON($this->formatDataClients($oneClient));
+        Model::sendJSON($this->formatDataClient($oneClient));
     }
+
+    private function formatDataClient($byClient){
+        
+        $clientTab = array(
+            
+        "clientId" => $byClient['client_id'],
+        "clientName" => $byClient['client_name'],
+        "clientSlogan" => $byClient['client_secret'],
+        "clientEmail" => $byClient['client_email'],
+        "clientAdresse" => $byClient['client_address'],
+        "clientActive" => $byClient['active'],
+        "shortDescription" => $byClient['short_description'],
+        "fullDescription" => $byClient['full_description'],
+        "clientLogo" => $byClient['logo_url'],
+        "clientUrl" => $byClient['client_url'],
+        "déléguéProtection" => $byClient['dpo'],
+        "contactTechnique" => $byClient['technical_contact'],
+        "contactCommercial" => $byClient['commercial_contact']
+        ) ;
+        
+        // echo "<pre>";
+        // print_r($clientTab);
+        // echo "</pre>";
+         return $clientTab;
+    }
+
 
     private function formatDataClients($byClients){
         $clientTab = [];
         foreach($byClients as $byClient){
-            $clientTab[] =[
-                "clientId" => $byClient['client_id'],
-                "clientName" => $byClient['client_name'],
-                "clientSlogan" => $byClient['client_secret'],
-                "clientEmail" => $byClient['client_email'],
-                "clientAdresse" => $byClient['client_address'],
-                "clientActive" => $byClient['active'],
-                "shortDescription" => $byClient['short_description'],
-                "fullDescription" => $byClient['full_description'],
-                "clientLogo" => $byClient['logo_url'],
-                "clientUrl" => $byClient['client_url'],
-                "déléguéProtection" => $byClient['dpo'],
-                "contactTechnique" => $byClient['technical_contact'],
-                "contactCommercial" => $byClient['commercial_contact']
-            ];
+
+            $clientTab [] = $this->formatDataClient($byClient);
+            
         }
         // echo "<pre>";
         // print_r($clientTab);

@@ -1,0 +1,28 @@
+### get clients
+@serveur = http://localhost/SERVEUR_SALLE_SPORT/api
+
+###
+GET {{serveur}}/clients.php
+Accept: application/json
+
+### un client
+GET {{serveur}}/client/1
+Accept: application/json
+
+
+### les salles
+GET {{serveur}}/salles
+Accept: application/json
+
+### les salles
+GET {{serveur}}/salle/3
+Accept: application/json
+
+
+### les salles
+GET {{serveur}}/salle/3
+Accept: application/json
+
+### les salles
+GET {{serveur}}/salle/3
+Accept: application/json
