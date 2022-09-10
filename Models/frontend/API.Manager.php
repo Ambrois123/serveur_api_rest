@@ -70,6 +70,8 @@ class APIManager extends Model{
         $statement->execute();
         $perms= $statement->fetchAll(PDO::FETCH_ASSOC);
         $statement->closeCursor();
-        return $perms;
+        return self::sendJSON($perms);
     }
+
+    
 }

@@ -1,3 +1,4 @@
+
 <?php 
 abstract class Model {
     private static $pdo;
@@ -15,9 +16,10 @@ abstract class Model {
     }
 
     public static function sendJSON($info){
+        
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: Application/json");
         echo json_encode($info);
     }
 }
-
+ 
