@@ -13,7 +13,9 @@ class Client
   {
     $this->conn = $db;
   }
-
+ /**
+     * recup data clients
+     */
   public function getDBClients()
   {
     $req = "SELECT * from " . $this->table;
@@ -25,7 +27,9 @@ class Client
 
     return $clients;
   }
-
+ /**
+     * connexion one client
+     */
   public function getDBOneClient($idClient)
   {
     $req = "SELECT * from " . $this->table . " c WHERE c.client_id = :idClient";
@@ -37,42 +41,5 @@ class Client
 
     return $oneClient;
   }
-
-  public static function formatDataClient($byClient){
-        
-    $clientTab = array(
-        
-    "clientId" => $byClient['client_id'],
-    "clientName" => $byClient['client_name'],
-    "clientSlogan" => $byClient['client_secret'],
-    "clientEmail" => $byClient['client_email'],
-    "clientAdresse" => $byClient['client_address'],
-    "clientActive" => $byClient['active'],
-    "shortDescription" => $byClient['short_description'],
-    "fullDescription" => $byClient['full_description'],
-    "clientLogo" => $byClient['logo_url'],
-    "clientUrl" => $byClient['client_url'],
-    "déléguéProtection" => $byClient['dpo'],
-    "contactTechnique" => $byClient['technical_contact'],
-    "contactCommercial" => $byClient['commercial_contact']
-    ) ;
-    
-    // echo "<pre>";
-    // print_r($clientTab);
-    // echo "</pre>";
-     return $clientTab;
-}
-
-public static function formatDataClients($byClients){
-  $clientTab = [];
-  foreach($byClients as $byClient){
-
-      $clientTab [] = Client::formatDataClient($byClient);
-      
-  }
-  // echo "<pre>";
-  // print_r($clientTab);
-  // echo "</pre>";
-   return $clientTab;
-}
+  
 }

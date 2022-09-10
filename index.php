@@ -2,7 +2,7 @@
  define("URL", str_replace("index.php","",(isset($_SERVER['HTTPS']) ? "https" : "http").
  "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
- require_once "Controllers/frontend/API.controller.php";
+ require_once "APIController.php";
  $apiController = new APIController();
 
  try{
@@ -10,30 +10,25 @@
         throw new Exception("Page n'existe pas");
      }else{
         $url = explode("/",filter_var($_GET['page'], FILTER_SANITIZE_URL));
-        if(empty($url[0]) || empty($url[1])) throw new Exception ("La page n'existe pas");
-        switch($url[0]){
-            case "front" : 
-                switch($url[1]){
-                    case "clients" : $apiController ->getClients();
+        if(empty($url[0]) ) throw new Exception ("La page n'existe pas!!!".$url[0]);
+         {
+                switch($url[0]){
+                    case "clients" : $apiController->getClients();
                     break;
                     case "client" : 
-                        if(empty($url[2])) throw new Exception ("ID manquant");
-                        $apiController->getOneClient($url[2]);
+                        if(empty($url[1])) throw new Exception ("ID manquant");
+                        $apiController->getOneClient($url[1]);
                     break;
                     case "salles" : $apiController ->getSalles();
                     break;
                     case "salle"  : 
-                        if(empty($url[2])) throw new Exception ("ID manquant");
-                        $apiController->getOneSalle($url[2]);
+                        if(empty($url[1])) throw new Exception ("ID manquant");
+                        $apiController->getOneSalle($url[1]);
                     break;
                     case "perms" : $apiController ->getPerms();
                     break;
                     default : throw new Exception("La page n'existe pas");
                 }
-            break; 
-            case "back" : echo "Page back end demandée";
-            break;
-            default : throw new Exception("La page n'existe pas");
         }
      }
     }catch (Exception $e){

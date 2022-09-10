@@ -1,31 +1,53 @@
 <?php
 
-require_once "Models/Model.php";
+use APIManager as GlobalAPIManager;
 
-class APIManager extends Model{
+require_once "Models/Client.php";
+require_once "Models/Salle.php";
+include_once 'config/Database.php';
+require_once "Utilities/ClientUtilities.php";
 
-    public function getClients(){
-        $req = "SELECT * 
-        from Api_client
-        ";
-        $statement = $this->getBdd()->prepare($req);
-        $statement->execute();
-        $clients = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $statement->closeCursor();
-        return $clients;
+
+class APIManager {
+    private $conn;
+
+    public function __construct() {
+        $database = new Database();
+        $this->conn = $database->connect();
+    }
+
+    /**
+     * Retourne la liste des clients
+     *
+     * @return array
+     */
+    public function getClients() : array
+    {
+
+        $dbClient = new Client($this->conn);
+        $result = $dbClient->getDBClients();
+
+        $client_results = ClientUtilities::formatDataClients($result);
+
+        return $client_results;
+
     }
 
     public function getDBOneClient($idClient){
-        $req = "SELECT * 
-        from Api_client
-        WHERE Api_client.client_id = :idClient
-        ";
-        $statement = $this->getBdd()->prepare($req);
-        $statement->bindValue(":idClient", $idClient,PDO::PARAM_INT);
-        $statement->execute();
-        $oneClient = $statement->fetch(PDO::FETCH_ASSOC);
-        $statement->closeCursor();
-        return $oneClient;
+
+        $dbClient = new Client($this->conn);
+        $result = $dbClient->getDBOneClient($idClient);
+
+        echo count($result);
+       
+        if(isset($result)){
+           
+            $client_result = ClientUtilities::formatDataClient($result);
+
+            return $client_result;
+        }
+
+        return null;
     }
 
     public function getDBSalles(){
@@ -70,6 +92,17 @@ class APIManager extends Model{
         $statement->closeCursor();
         return self::sendJSON($perms);
     }
+
+   
+
+    
+
+      private static function sendResponse($response){
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+
+        return json_encode($response);
+      }
 
     
 }

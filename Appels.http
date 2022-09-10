@@ -1,8 +1,8 @@
 ### get clients
-@serveur = http://localhost/SERVEUR_SALLE_SPORT/api
+@serveur = http://localhost/SERVEUR_SALLE_SPORT
 
 ###
-GET {{serveur}}/clients.php
+GET {{serveur}}/clients
 Accept: application/json
 
 ### un client
