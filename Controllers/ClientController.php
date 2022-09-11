@@ -1,8 +1,10 @@
 <?php
 
-require_once "../Models/Client.php";
-include_once '../config/Database.php';
+
+require_once __DIR__."/../Models/Client.php";
+require_once __DIR__.'/../config/Database.php';
 require_once 'BaseController.php';
+
 
 /**
  * Client controller class. It handle all the request related to the client
