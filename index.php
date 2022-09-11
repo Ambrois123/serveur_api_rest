@@ -3,16 +3,51 @@
  "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
  require_once "APIController.php";
- $apiController = new APIController();
+
+ //require the controllers
+ foreach (scandir("Controllers") as $filename) {
+    $path = 'Controllers/' . $filename;
+    if (is_file($path)) {
+        require $path;
+    }
+}
+
+ $routes = require_once __DIR__.'/config/routes.php';
+
 
  try{
     if(empty($_GET['page'])){
         throw new Exception("Page n'existe pas");
      }else{
         $url = explode("/",filter_var($_GET['page'], FILTER_SANITIZE_URL));
-        if(empty($url[0]) ) throw new Exception ("La page n'existe pas!!!".$url[0]);
+        if(empty($url[0]) ) throw new Exception ("La page n'existe pas!!!");
          {
-                switch($url[0]){
+
+            
+            if(isset($routes['clients']['GET'])){
+                $route = $routes['clients']['GET'];
+
+                $className = $route['class'];
+                $functionName = $route['function'];
+                //echo "class = ".$className.", function = ".$functionName;
+
+                $controller = new $className();
+
+                //execute the request. If the request has more parameter
+                if(empty($url[1])){
+                    $controller->$functionName();
+                }else{
+                    $controller->$functionName($url[1]);
+                }
+                
+                
+            }else{
+                header("HTTP/1.1 404 Not Found");
+                
+            }
+                
+            /*
+            switch($url[0]){
                     case "clients" : $apiController->getClients();
                     break;
                     case "client" : 
@@ -29,11 +64,15 @@
                     break;
                     default : throw new Exception("La page n'existe pas");
                 }
+            */
         }
      }
     }catch (Exception $e){
         $msg = $e->getMessage();
-        echo $msg;
+        //TODO: send request param error
+         header("HTTP/1.1 404 Not Found");
+         $outPut = array("message" => $msg);
+        echo json_encode($outPut);
     }
  
 
