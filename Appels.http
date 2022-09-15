@@ -1,5 +1,5 @@
 ### get clients
-@serveur = http://localhost/SERVEUR_SALLE_SPORT
+@serveur = http://localhost/serveur_api_rest
 
 ###
 GET {{serveur}}/clients
@@ -20,9 +20,13 @@ Accept: application/json
 
 
 ### les salles
-GET {{serveur}}/salle/3
+GET {{serveur}}/salle/4
 Accept: application/json
 
 ### les salles
-GET {{serveur}}/salle/3
+GET {{serveur}}/salle/5
+Accept: application/json
+
+### les offres
+GET{{serveur}}/offers
 Accept: application/json

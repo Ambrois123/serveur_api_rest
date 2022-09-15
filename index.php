@@ -2,8 +2,6 @@
  define("URL", str_replace("index.php","",(isset($_SERVER['HTTPS']) ? "https" : "http").
  "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
- require_once "APIController.php";
-
  //require the controllers
  foreach (scandir("Controllers") as $filename) {
     $path = 'Controllers/' . $filename;
@@ -22,17 +20,19 @@
         $url = explode("/",filter_var($_GET['page'], FILTER_SANITIZE_URL));
         if(empty($url[0]) ) throw new Exception ("La page n'existe pas!!!");
          {
-
+            //get the request path and the method
+            $requestPath = $url[0];
+            $requestMethod = $_SERVER['REQUEST_METHOD'];
             
-            if(isset($routes['clients']['GET'])){
-                $route = $routes['clients']['GET'];
+            if(isset($routes[$requestPath][ $requestMethod ])){
+                //get the route given the request path and the method. 
+                $route = $routes[$requestPath][ $requestMethod ];
 
                 $className = $route['class'];
                 $functionName = $route['function'];
-                //echo "class = ".$className.", function = ".$functionName;
-
+                
                 $controller = new $className();
-
+                
                 //execute the request. If the request has more parameter
                 if(empty($url[1])){
                     $controller->$functionName();
@@ -46,25 +46,6 @@
                 
             }
                 
-            /*
-            switch($url[0]){
-                    case "clients" : $apiController->getClients();
-                    break;
-                    case "client" : 
-                        if(empty($url[1])) throw new Exception ("ID manquant");
-                        $apiController->getOneClient($url[1]);
-                    break;
-                    case "salles" : $apiController ->getSalles();
-                    break;
-                    case "salle"  : 
-                        if(empty($url[1])) throw new Exception ("ID manquant");
-                        $apiController->getOneSalle($url[1]);
-                    break;
-                    case "perms" : $apiController ->getPerms();
-                    break;
-                    default : throw new Exception("La page n'existe pas");
-                }
-            */
         }
      }
     }catch (Exception $e){

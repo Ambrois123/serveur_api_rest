@@ -41,4 +41,64 @@ return [
         */
        
     ],
+    "salles" =>  
+    [
+       
+            "GET" => [
+                "class" => "SalleController",
+                "function" => "getSalles"
+        ],
+        /* Not used for the moment
+        "POST" => [
+            "class" => "ClientController",
+            "function" => "postClients"
+        ],
+        */
+       
+    ],
+    "salle" =>
+    [
+        
+        "GET" => [
+            "class" => "SalleController",
+            "function" => "getSalle"
+        ],
+         /* Not used for the moment
+        "POST" => [
+            "class" => "ClientController",
+            "function" => "postClient"
+        ],
+        */
+       
+    ],
+    "offers" =>
+    [
+        
+        "GET" => [
+            "class" => "OfferController",
+            "function" => "getOffers"
+        ],
+         /* Not used for the moment
+        "POST" => [
+            "class" => "ClientController",
+            "function" => "postClient"
+        ],
+        */
+       
+    ],
+    "offer" =>
+    [
+        
+        "GET" => [
+            "class" => "OfferController",
+            "function" => "getOffers"
+        ],
+         /* Not used for the moment
+        "POST" => [
+            "class" => "ClientController",
+            "function" => "postClient"
+        ],
+        */
+       
+    ],
 ];

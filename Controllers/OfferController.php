@@ -1,19 +1,19 @@
 <?php
 
 
-require_once __DIR__."/../Models/Client.php";
+require_once __DIR__."/../Models/Offer.php";
 require_once __DIR__.'/../config/Database.php';
 require_once 'BaseController.php';
-require_once __DIR__."/../Utilities/ClientUtils.php";
+require_once __DIR__."/../Utilities/OfferUtils.php";
 
 
 /**
  * Client controller class. It handle all the request related to the client
  */
-Class ClientController extends BaseController{
+Class OfferController extends BaseController{
 
     private $conn;
-    private $dbClient;
+    private $dbOffer;
 
     public function __construct(){
         
@@ -21,40 +21,40 @@ Class ClientController extends BaseController{
         $conn = $database->connect();
 
         //create the sdbClient object
-        $this->dbClient =  new Client($conn);
+        $this->dbOffer =  new Offer($conn);
     }
 
     /**
      * Get all the clients
      * @param: inputParam not used
      */
-    public function getClients($inputParam = null){
+    public function getOffers($inputParam = null){
 
         //validate the inputParam
             
-        $result = $this->dbClient->getDBClients();
+        $result = $this->dbOffer->getDBOffers();
 
-        $client_results = ClientUtils::formatDataClients($result);
+        $offer_results = OfferUtils::formatDataOffers($result);
 
-        $this->sendJSON($client_results);
+        $this->sendJSON($offer_results);
     }
 
     /**
      * Get a single client
      * @param: intputParam the id of the desired client
      */
-    public function getClient($intputParam = null){
+    public function getOffer($intputParam = null){
         
         //TODO: validate the param
 
-        $result = $this->dbClient->getDBOneClient($intputParam);
+        $result = $this->dbOffer->getDBOneOffer($intputParam);
 
        //if the client is not found
         if(isset($result)){
            
-            $client_result = ClientUtils::formatDataClient($result);
+            $offer_result = OfferUtils::formatDataOffer($result);
 
-            $this->sendJSON($client_result);
+            $this->sendJSON($offer_result);
         }
 
         $this->sendNotFound();

@@ -1,6 +1,6 @@
 <?php
 
-Class ClientUtilities{
+Class ClientUtils{
     public static function formatDataClient($byClient){
         
         $clientTab = array(
@@ -28,7 +28,7 @@ Class ClientUtilities{
         $clientTab = [];
         foreach($byClients as $byClient){
       
-            $clientTab [] = ClientUtilities::formatDataClient($byClient);
+            $clientTab [] = ClientUtils::formatDataClient($byClient);
             
         }
         // echo "<pre>";
